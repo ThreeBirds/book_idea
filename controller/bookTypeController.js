@@ -76,7 +76,10 @@ class BookTypeController {
   async query(ctx) {
     let code = ctx.request.query.code
     let type = ctx.request.query.type
-    await bookTypeService.query(code, type)
+    let start = ctx.request.query.start
+    let size = ctx.request.query.size
+    let result = await bookTypeService.query(code, type, parseInt(start), parseInt(size))
+    ctx.body = result
   }
 
 }

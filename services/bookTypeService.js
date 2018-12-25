@@ -46,7 +46,9 @@ class BookTypeService {
    * @param {number} size 
    */
   async query(code, type, start, size) {
-    let sql = 'SELECT COUNT(*) count FROM book_type WHERE '
+    let sqlCountPre = 'SELECT COUNT(*) count FROM book_type WHERE '
+    let sqlQueryPre = 'SELECT * FROM book_type WHERE '
+    let sql = ''
     let args = []
     if (code != undefined && code != '') {
       sql += "`code` like ? AND "
@@ -57,15 +59,23 @@ class BookTypeService {
       args.push('%' + type + '%')
     }
     sql += '1'
-    let count = await this.queryCount(sql, args)
+    let count = await this.queryCount(sqlCountPre + sql, args)
     let result = {}
-    await sqlHelper.exec(sql, args)
+    result.count = count
+    sql += ' LIMIT ?,?'
+    args.push(start)
+    args.push(size)
+    await sqlHelper.exec(sqlQueryPre + sql, args)
       .then(data => {
-
+        result.data = data.results
+        result.errCode = 0
+        result.errMsg = "查询成功"
       })
       .catch(err => {
-
+        result.errCode = 1
+        result.errMsg = err
       })
+      return result
   }
 
   async queryCount(sql, args) {
