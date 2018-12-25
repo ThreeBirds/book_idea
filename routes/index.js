@@ -1,5 +1,5 @@
-
 let userRouter = require('./users')
+let bookRouter = require('./book')
 
 module.exports =  (router) => {
   router.get('/welcome', async function (ctx, next) {
@@ -11,5 +11,6 @@ module.exports =  (router) => {
   })
 
   userRouter(router)
+  bookRouter(router)
 }
 

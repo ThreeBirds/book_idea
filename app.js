@@ -12,6 +12,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const debug = require('debug')('koa2:server')
 const path = require('path')
+const session = require('koa-session')
 
 const config = require('./config')
 const routes = require('./routes')
@@ -21,6 +22,7 @@ const port = process.env.PORT || config.port
 // error handler
 onerror(app)
 
+app.keys = ['hello World']
 // middlewares
 app.use(bodyparser())
   .use(json())
@@ -33,6 +35,7 @@ app.use(bodyparser())
   }))
   .use(router.routes())
   .use(router.allowedMethods())
+  .use(session(config.session, app))
 
 // logger
 app.use(async (ctx, next) => {
@@ -42,12 +45,13 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - $ms`)
 })
 
-router.get('/', async (ctx, next) => {
+router.get('/*', async (ctx, next) => {
   // ctx.body = 'Hello World'
-  ctx.state = {
-    title: 'Koa2'
-  }
-  await ctx.render('index', ctx.state)
+  // ctx.state = {
+  //   title: 'Koa2'
+  // }
+  // await ctx.render('index', ctx.state)
+  await next()
 })
 
 routes(router)
@@ -55,6 +59,7 @@ app.on('error', function(err, ctx) {
   console.log(err)
   logger.error('server error', err, ctx)
 })
+
 
 module.exports = app.listen(config.port, () => {
   console.log(`Listening on http://localhost:${config.port}`)

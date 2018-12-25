@@ -2,15 +2,16 @@ const sqlHelper = require('../common/sqlHelper')
 
 class UserService {
 
-	findUserData() {
-		sqlHelper.exec('SELECT * FROM admin')
+	async findUserData() {
+		let result
+		await	sqlHelper.exec('SELECT * FROM admin')
 				.then(data => {
-					let i = 0
+					result = data					 
 				})
 				.catch(err => {
-
+					
 				})
-			
+		return result
 	}
 }
 

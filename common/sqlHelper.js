@@ -32,7 +32,7 @@ class SqlHelper {
                         if (err) {
                             reject(err)
                         }  else {
-                            resolve({results, fields})
+                             resolve({results, fields})
                         }
                         
                     })    

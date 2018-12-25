@@ -3,8 +3,13 @@ let userService = new UserService()
 
 class UserController {
 
-	findUserData() {
-		userService.findUserData()
+	/**
+	 * 
+	 * @param {Context} ctx 
+	 */
+	async findUserData(ctx) {
+		let r = await userService.findUserData()
+		ctx.body = r
 	}
 }
 

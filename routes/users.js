@@ -3,7 +3,6 @@ const userController = new UserController()
 
 module.exports =  (router) => {
   router.get('/user', async function (ctx, next) {
-    userController.findUserData()
-    ctx.body = 'this a users response!';
+    await userController.findUserData(ctx)
   })
 }

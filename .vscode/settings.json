@@ -1,3 +1,4 @@
 {
-  "editor.tabCompletion": "onlySnippets"
+"editor.tabCompletion": "onlySnippets",
+"editor.detectIndentation": false
 }
