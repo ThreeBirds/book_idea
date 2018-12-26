@@ -75,7 +75,23 @@ class BookTypeService {
         result.errCode = 1
         result.errMsg = err
       })
-      return result
+    return result
+  }
+
+  async queryAll() {
+    let result = {}
+    await sqlHelper.exec('SELECT bt.CODE,bt.type FROM book_type bt')
+      .then(data => {
+        result.data = data.results
+        result.errCode = 0
+        result.errMsg = "查询成功"
+      })
+      .catch(err => {
+        result.errCode = 1
+        result.errMsg = err
+      })
+    return result
+
   }
 
   async queryCount(sql, args) {

@@ -13,6 +13,7 @@ const logger = require('koa-logger')
 const debug = require('debug')('koa2:server')
 const path = require('path')
 const session = require('koa-session')
+const koaBody = require('koa-body')
 
 const config = require('./config')
 const routes = require('./routes')
@@ -25,6 +26,12 @@ onerror(app)
 app.keys = ['hello World']
 // middlewares
 app.use(bodyparser())
+  .use(koaBody({
+    multipart: true,
+    formidable: {
+      maxFileSize: 20 * 1024 * 1024
+    }
+  }))
   .use(json())
   .use(logger())
   .use(require('koa-static')(__dirname + '/public'))

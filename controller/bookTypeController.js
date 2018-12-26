@@ -1,6 +1,9 @@
 let BookTypeService = require('../services/bookTypeService')
 let bookTypeService = new BookTypeService()
 
+/**
+ * 图书类别管理类
+ */
 class BookTypeController {
 
   async addType(ctx) {
@@ -79,6 +82,11 @@ class BookTypeController {
     let start = ctx.request.query.start
     let size = ctx.request.query.size
     let result = await bookTypeService.query(code, type, parseInt(start), parseInt(size))
+    ctx.body = result
+  }
+
+  async queryAll(ctx) {
+    let result = await bookTypeService.queryAll()
     ctx.body = result
   }
 
