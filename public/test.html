@@ -18,6 +18,44 @@
 		<input type="file" name="coverFile"/>
 		<input type="submit" value="提交"/>
   </form>
+  <h1>========================修改===============================</h1>
+  <form action="/book/info/update" method="POST" enctype="multipart/form-data">
+	<table>
+		<tr>
+			<td>id</td>
+			<td><input type="text" name="id"/></td>
+		</tr>
+		<tr>
+			<td>书名</td>
+			<td><input type="text" name="name"/></td>
+		</tr>
+		<tr>
+			<td>书编码</td>
+			<td><input type="text" name="code"/></td>
+		</tr>
+		<tr>
+			<td>类型编码</td>
+			<td><input type="text" name="typeCode"/></td>
+		</tr>
+		<tr>
+			<td>封面</td>
+			<td><input type="file" name="coverFile"/></td>
+		</tr>
+		<tr>
+			<td>推荐语</td>
+			<td><td><input type="text" name="recommen"/></td></td>
+		</tr>
+		<tr>
+			<td>作者介绍</td>
+			<td><td><input type="text" name="author"/></td></td>
+		</tr>
+		<tr>
+			<td>主要内容</td>
+			<td><td><input type="text" name="summary"/></td></td>
+		</tr>
+	</table>
+	<input type="submit" value="提交"/>
+</form>
 </body>
 
 </html>

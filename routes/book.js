@@ -37,4 +37,16 @@ module.exports = (router) => {
   router.all("/book/info/add", async function (ctx, next) {
     await bookInfoController.add(ctx)
   })
+  router.all("/book/info/update", async function (ctx, next) {
+    await bookInfoController.update(ctx)
+  })
+  router.get("/book/info/query", async function (ctx, next) {
+    await bookInfoController.query(ctx)
+  })
+  router.get("/book/info/queryByCode/:code", async function (ctx, next) {
+    await bookInfoController.queryByCode(ctx)
+  })
+  router.get("/book/info/delete/:codes", async function (ctx, next) {
+    await bookInfoController.delete(ctx)
+  })
 }
