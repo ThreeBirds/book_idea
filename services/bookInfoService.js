@@ -113,7 +113,7 @@ class BookInfoService {
 
   async queryByCode(code) {
     let r = null
-    await sqlHelper.exec('SELECT * FROM book_info WHERE `code`=?', [code])
+    await sqlHelper.exec('SELECT bi.*,bt.type FROM book_info bi  LEFT JOIN book_type bt ON  bi.type_code=bt.`CODE` WHERE bi.`code`=?', [code])
       .then(data => {
         r = data.results
       })

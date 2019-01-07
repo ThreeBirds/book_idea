@@ -9,7 +9,7 @@ module.exports = {
   },
   session: {
     key: 'koa:sess',
-    maxAge: 10000,
+    maxAge: 86400000,
     overwrite: true,
     httpOnly: true,
     signed: true,
