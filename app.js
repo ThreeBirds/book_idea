@@ -24,6 +24,10 @@ const port = process.env.PORT || config.port
 onerror(app)
 
 app.keys = ['hello World']
+app.use(async (ctx, next) => {
+  ctx.response.set('Access-Control-Allow-Origin', '*')
+  await next()
+})
 // middlewares
 app.use(bodyparser())
   .use(koaBody({
