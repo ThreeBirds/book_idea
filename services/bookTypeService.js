@@ -80,14 +80,22 @@ class BookTypeService {
 
   async queryAll() {
     let result = {}
-    await sqlHelper.exec('SELECT bt.CODE,bt.type FROM book_type bt')
+    let sql = 'SELECT bt.CODE,bt.type FROM book_type bt'
+    let count = await this.queryCount('SELECT count(*) count FROM book_type bt ', [])
+    await sqlHelper.exec(sql)
       .then(data => {
         result.data = data.results
         result.errCode = 0
+        result.count = count
+        result.code = 0
+        result.msg = "查询成功"
         result.errMsg = "查询成功"
       })
       .catch(err => {
         result.errCode = 1
+        result.count = 0
+        result.code = 1
+        result.msg = "查询失败"
         result.errMsg = err
       })
     return result
