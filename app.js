@@ -26,6 +26,8 @@ onerror(app)
 app.keys = ['hello World']
 app.use(async (ctx, next) => {
   ctx.response.set('Access-Control-Allow-Origin', '*')
+  ctx.response.set("Access-Control-Allow-Headers", "X-Requested-With")
+  ctx.response.set("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS")
   await next()
 })
 // middlewares
