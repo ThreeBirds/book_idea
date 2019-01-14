@@ -1,6 +1,7 @@
 let userRouter = require('./users')
 let bookRouter = require('./book')
 let commentRouter = require('./comment')
+let banner = require('./banner')
 
 module.exports =  (router) => {
   router.get('/welcome', async function (ctx, next) {
@@ -14,5 +15,6 @@ module.exports =  (router) => {
   userRouter(router)
   bookRouter(router)
   commentRouter(router)
+  banner(router)
 }
 

@@ -65,20 +65,82 @@ class UserService {
     return r
   }
 
-  
-  async query(user) {
-
-    let sqlPre = 'SELECT *,(SELECT COUNT(*) FROM fans WHERE user_code=openid) fansCount,' +
+  /**
+   * 
+   * @param {{name:string, scoreMin:number, scoreMax:number, fansMin:number, fansMax:number}} user
+   * @param {number}start 分页起始条目
+   * @param {number}size 分页一页的数量 
+   */
+  async query(user, start, size) {
+    
+    let sql = 'SELECT *,(SELECT COUNT(*) FROM fans WHERE user_code=openid) fansCount,' +
                 '(SELECT COUNT(*) FROM `comment` WHERE writer_code=openid) commentCount ' +
-                'FROM users WHERE '
-    let sql = ' openid in (SELECT * FROM (' +
-    'SELECT user_code FROM fans GROUP BY user_code HAVING COUNT(*) >= 1 AND COUNT(*) < 4' +
-    ') AS tcodes WHERE tcodes.user_code in (' +
-    'SELECT writer_code FROM `comment` GROUP BY writer_code HAVING COUNT(*) >= 0 AND COUNT(*) < 4' +
-    ') )'
+                'FROM users '
+    let args = []
+    if (user.fansMax === user.fansMax || user.fansMin > 0) {
+      sql += ' HAVING fansCount >= ? ' 
+      args.push(user.fansMin)
+      if (user.fansMax === user.fansMax) {
+        sql += 'AND fansCount <= ? AND '
+        args.push(parseInt(user.fansMax))
+      }
+    } else {
+      sql += 'WHERE '
+    }
 
+    if (user.scoreMin > 0 || user.scoreMax === user.scoreMax) {
+      sql += ' score >= ? AND '
+      args.push(user.scoreMin)
+      if (user.scoreMax === user.scoreMax) {
+        sql += 'score <= ? AND '
+        args.push(parseInt(user.scoreMax))
+      }
+    }
 
-    console.log('tag', '')
+    sql += '`name` LIKE ? '
+    args.push(`%${user.name}%`)
+    //查询数量的sql
+    let sqlCount = `SELECT COUNT(*) count FROM (${sql} ) AS r `
+    //查询数量的
+    let count = 0
+    await sqlHelper.exec(sqlCount, args)
+    .then(data => {
+      count = data.results[0].count
+    })
+    .catch(err => {
+
+    })
+
+    sql += 'LIMIT ?,?'
+    args.push(start)
+    args.push(size)
+    let r = {}
+    await sqlHelper.exec(sql, args)
+    .then(data => {
+      r.errMsg = '查询成功'
+      r.errCode = 0
+      r.data = data.results
+      r.count = count
+    })
+    .catch(err => {
+      r.errMsg = err
+      r.errCode = 1
+    })
+    return r
+  }
+
+  async editScore(openid, score) {
+
+    let sql = 'UPDATE users SET score=? WHERE openid=? '
+    let r = false
+    await sqlHelper.exec(sql, [score, openid])
+    .then(data => {
+      r = data.results.affectedRows > 0 ? true : false
+    })
+    .catch(err => {
+
+    })
+    return r
   }
 
 }

@@ -58,7 +58,34 @@ class UserController {
   }
 
   async query(ctx) {
-    await userService.query()
+
+    let user = {}
+    user.name = ctx.request.query.name || ""
+    user.scoreMin = parseInt(ctx.request.query.scoreMin) || 0
+    user.scoreMax = parseInt(ctx.request.query.scoreMax)
+    user.fansMin = parseInt(ctx.request.query.fansMin) || 0
+    user.fansMax = parseInt(ctx.request.query.fansMax)
+    let start = parseInt(ctx.request.query.start) || 0
+    let size = parseInt(ctx.request.query.size) || 0
+    let r = await userService.query(user, start, size)
+    ctx.body = r
+  }
+
+  async editScore(ctx) {
+    let openid = ctx.request.query.openid || ""
+    let score = parseInt(ctx.request.query.score) || 0
+    let r = await userService.editScore(openid, score)
+    if (r) {
+      ctx.body = {
+        errCode: 0,
+        errMsg: '操作成功'
+      }
+    } else {
+      ctx.body = {
+        errCode: 1,
+        errMsg: '操作失败'
+      }
+    }
   }
 
 }
