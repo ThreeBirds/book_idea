@@ -7,6 +7,7 @@ class SignManagerController {
     let file = ctx.request.files.file
     let content = ctx.request.body.content || ""
     let bookName = ctx.request.body.bookName || ""
+    let defaultSign = ctx.request.body.defaultSign || "0"
 
   }
 }

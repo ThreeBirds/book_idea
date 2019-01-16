@@ -87,13 +87,13 @@ class BookInfoService {
     args.push(size)
     await sqlHelper.exec(sqlInfo, args)
       .then(data => {
-        r.errCode = 0
-        r.errMsg = '查询成功'
+        r.code = 0
+        r.msg = '查询成功'
         r.data = data.results
       })
       .catch(err => {
         r.count = 0
-        r.errCode = 1
+        r.code = 1
         r.errMsg = err
       })
     return r
