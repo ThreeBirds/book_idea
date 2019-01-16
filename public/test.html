@@ -13,7 +13,6 @@
 		let code = $('#code').val() || ''
 		let typeCode = $('#typeCode').val() || ''
 		let coverFile = $('#coverFile')[0].files[0]
-		alert(coverFile)
 		let fd = new FormData()
 		fd.append("name", name)
 		fd.append("code", code)
@@ -23,7 +22,14 @@
 		}
 		$.ajax({
 			url:'/book/info/add',
-			
+			type: 'post',
+			dataType:'json',
+            processData: false,
+            contentType: false,
+            data: fd,
+            success: function (data) {
+				alert(JSON.stringify(data))
+			}
 		})
 	  }
 
@@ -32,7 +38,7 @@
 
 <body>
   <p>Hello world</p>
-	<form action="/book/info/add" method="POST" enctype="multipart/form-data">
+	<form enctype="multipart/form-data">
 		<input id="name" type="text" name="name"/>
 		<input id="code" type="text" name="code"/>
 		<input id="typeCode" type="text" name="typeCode"/>

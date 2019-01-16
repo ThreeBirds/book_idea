@@ -13,7 +13,7 @@ class BookInfoService {
     //插入记录
     let r = 0
     await sqlHelper.exec('INSERT INTO book_info(CODE,NAME,type_code,cover_url,recommen,author,author_summary,summary,to_root) ' +
-        'VALUES(?,?,?,?,?,?,?,?)', [book.code, book.name, book.typeCode, filePath, book.recommen, book.author,book.authorSummary, book.summary, book.toRoot])
+        'VALUES(?,?,?,?,?,?,?,?,?)', [book.code, book.name, book.typeCode, filePath, book.recommen, book.author,book.authorSummary, book.summary, book.toRoot])
       .then(data => {
         r = data.results.affectedRows
       })

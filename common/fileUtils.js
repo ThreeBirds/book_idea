@@ -22,8 +22,8 @@ class FileUtils {
       const reader = fs.createReadStream(file.path)
       const upStream = fs.createWriteStream(__dirname + "/../public/" + filePath)
       reader.pipe(upStream)
-      reader.close()
-      upStream.close()
+      // reader.close()
+      // upStream.close()
     }
     return filePath
   }
