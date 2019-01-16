@@ -104,11 +104,22 @@
 >>>>>>>>>>>>>>>>添加
 <form action="/signManager/insert" method="POST" enctype="multipart/form-data">
 	<input type="file" name="file" value="图片"/><br>
-	<input type="text" name="idx" />顺序<br>
-	<input type="text" name="url" />链接<br>
+	<input type="text" name="times" />日期，格式yyyy-mm-dd 每个日期用,隔开<br>
+	<input type="text" name="content" />内容<br>
+	<input type="text" name="bookName" />书名<br>
+	<input type="text" name="defaultSign" />是否默认<br>
+	<input type="submit" value="提交"/>
+</form>
+>>>>>>>>>>>>>>>>>>修改 
+<form action="/signManager/update" method="POST" enctype="multipart/form-data">
+	<input type="file" name="file" value="图片"/><br>
+	<input type="text" name="times" />日期，格式yyyy-mm-dd 每个日期用,隔开<br>
+	<input type="text" name="content" />内容<br>
+	<input type="text" name="bookName" />书名<br>
+	<input type="text" name="defaultSign" />是否默认<br>
 	<input type="text" name="id" />id<br>
 	<input type="submit" value="提交"/>
-</form> 
+</form>
 </body>
 
 </html>
