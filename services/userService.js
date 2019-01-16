@@ -117,14 +117,14 @@ class UserService {
     let r = {}
     await sqlHelper.exec(sql, args)
     .then(data => {
-      r.errMsg = '查询成功'
-      r.errCode = 0
+      r.msg = '查询成功'
+      r.code = 0
       r.data = data.results
       r.count = count
     })
     .catch(err => {
-      r.errMsg = err
-      r.errCode = 1
+      r.msg = err
+      r.code = 1
     })
     return r
   }

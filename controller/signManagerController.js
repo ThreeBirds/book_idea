@@ -9,6 +9,7 @@ class SignManagerController {
     let bookName = ctx.request.body.bookName || ""
     let defaultSign = ctx.request.body.defaultSign || "0"
 
+    
   }
 }
 

@@ -6,27 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <script src="./js/jquery-3.2.1.min.js"></script>
   <script>
 	  function testClick() {
-		
+		let name = $('#name').val() || ''
+		let code = $('#code').val() || ''
+		let typeCode = $('#typeCode').val() || ''
+		let coverFile = $('#coverFile')[0].files[0]
+		alert(coverFile)
+		let fd = new FormData()
+		fd.append("name", name)
+		fd.append("code", code)
+		fd.append("typeCode", typeCode)
+		if (coverFile !== undefined) {
+			fd.append("coverFile", coverFile)
+		}
+		$.ajax({
+			url:'/book/info/add',
+			
+		})
 	  }
 
-	  function backToHome() {
-		  iosBack()
-	  }
   </script>
 </head>
 
 <body>
   <p>Hello world</p>
-  <button onclick="backToHome()">返回</button>
-  <button onclick="testClick()" style="width: 200px;height: 200px;">测试</button>
 	<form action="/book/info/add" method="POST" enctype="multipart/form-data">
-		<input type="text" name="name"/>
-		<input type="text" name="code"/>
-		<input type="text" name="typeCode"/>
-		<input type="file" name="coverFile"/>
-		<input type="submit" value="提交"/>
+		<input id="name" type="text" name="name"/>
+		<input id="code" type="text" name="code"/>
+		<input id="typeCode" type="text" name="typeCode"/>
+		<input id="coverFile" type="file" name="coverFile"/>
+		<input type="button" onclick="testClick()" value="提交"/>
   </form>
   <h1>========================修改===============================</h1>
   <form action="/rsi/rsi/punch_attenceAddParams.action" method="POST" enctype="multipart/form-data">
