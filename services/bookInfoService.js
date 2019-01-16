@@ -5,15 +5,15 @@ class BookInfoService {
 
   /**
    * 
-   * @param {{code,name,typeCode,recommen,author,summary,isRoot}} book 
+   * @param {{code,name,typeCode,recommen,author,authorSummary,summary,isRoot}} book 
    * @param {File} coverImg 
    */
   async add(book, coverImg) {
     let filePath = FileUtils.saveFile(coverImg)
     //插入记录
     let r = 0
-    await sqlHelper.exec('INSERT INTO book_info(CODE,NAME,type_code,cover_url,recommen,author,summary,to_root) ' +
-        'VALUES(?,?,?,?,?,?,?,?)', [book.code, book.name, book.typeCode, filePath, book.recommen, book.author, book.summary, book.toRoot])
+    await sqlHelper.exec('INSERT INTO book_info(CODE,NAME,type_code,cover_url,recommen,author,author_summary,summary,to_root) ' +
+        'VALUES(?,?,?,?,?,?,?,?)', [book.code, book.name, book.typeCode, filePath, book.recommen, book.author,book.authorSummary, book.summary, book.toRoot])
       .then(data => {
         r = data.results.affectedRows
       })
@@ -26,7 +26,7 @@ class BookInfoService {
   /**
    * 
    * @param {string} code 
-   * @param {{name,typeCode,coverUrl,recommen,author,summary,isRoot}} book 
+   * @param {{name,typeCode,coverUrl,recommen,author,authorSummary,summary,isRoot}} book 
    * @param {File} coverImg
    */
   async update(id, book, coverImg) {
@@ -37,8 +37,8 @@ class BookInfoService {
       filePath = savePath
     }
     let r = 0
-    const sql = 'UPDATE book_info SET `code`=?,`name`=?,type_code=?,cover_url=?,recommen=?,author=?,summary=?,to_root=? WHERE `id`=?'
-    await sqlHelper.exec(sql, [book.code,book.name, book.typeCode, filePath, book.recommen, book.author, book.summary, book.toRoot, id])
+    const sql = 'UPDATE book_info SET `code`=?,`name`=?,type_code=?,cover_url=?,recommen=?,author=?,author_summary=?,summary=?,to_root=? WHERE `id`=?'
+    await sqlHelper.exec(sql, [book.code,book.name, book.typeCode, filePath, book.recommen, book.author, book.authorSummary, book.summary, book.toRoot, id])
       .then(data => {
         r = data.results.affectedRows
       })

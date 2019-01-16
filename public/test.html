@@ -8,17 +8,18 @@
   <title>Document</title>
   <script>
 	  function testClick() {
-		iosShare_v2019({
-			title:'金猪报喜',
-			introduce:'这是一头牛，然而非常像猪',
-			url:'http://www.baidu.com'
-		})
+		
+	  }
+
+	  function backToHome() {
+		  iosBack()
 	  }
   </script>
 </head>
 
 <body>
   <p>Hello world</p>
+  <button onclick="backToHome()">返回</button>
   <button onclick="testClick()" style="width: 200px;height: 200px;">测试</button>
 	<form action="/book/info/add" method="POST" enctype="multipart/form-data">
 		<input type="text" name="name"/>
@@ -76,6 +77,15 @@
 </form> 
 >>>>>>>>>>>>>>>>>>>>>>>>>.修改
 <form action="/banner/update" method="POST" enctype="multipart/form-data">
+	<input type="file" name="file" value="图片"/><br>
+	<input type="text" name="idx" />顺序<br>
+	<input type="text" name="url" />链接<br>
+	<input type="text" name="id" />id<br>
+	<input type="submit" value="提交"/>
+</form> 
+=========================签到管理=========
+>>>>>>>>>>>>>>>>添加
+<form action="/signManager/insert" method="POST" enctype="multipart/form-data">
 	<input type="file" name="file" value="图片"/><br>
 	<input type="text" name="idx" />顺序<br>
 	<input type="text" name="url" />链接<br>

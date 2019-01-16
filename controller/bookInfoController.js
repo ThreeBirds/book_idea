@@ -11,6 +11,7 @@ class BookInfoController {
     book.typeCode = ctx.request.body.typeCode || ''
     book.recommen = ctx.request.body.recommen || ''
     book.author = ctx.request.body.author || ''
+    book.authorSummary = ctx.request.body.authorSummary || ''
     book.summary = ctx.request.body.summary || ''
     book.toRoot = parseInt(ctx.request.body.toRoot) || 0
     if (book.code === '' || book.name === '' || book.typeCode === '') {
@@ -43,6 +44,7 @@ class BookInfoController {
     book.typeCode = ctx.request.body.typeCode || ''
     book.recommen = ctx.request.body.recommen || ''
     book.author = ctx.request.body.author || ''
+    book.authorSummary = ctx.request.body.authorSummary || ''
     book.summary = ctx.request.body.summary || ''
     book.coverUrl = ctx.request.body.coverUrl || ''
     book.toRoot = parseInt(ctx.request.body.toRoot) || 0

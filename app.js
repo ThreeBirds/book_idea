@@ -19,7 +19,9 @@ const config = require('./config')
 const routes = require('./routes')
 
 const port = process.env.PORT || config.port
-
+process.on("uncaughtException", err => {
+  
+})
 // error handler
 onerror(app)
 
@@ -72,6 +74,7 @@ app.on('error', function(err, ctx) {
   console.log(err)
   logger.error('server error', err, ctx)
 })
+
 
 
 module.exports = app.listen(config.port, () => {
