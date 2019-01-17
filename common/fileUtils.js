@@ -9,6 +9,8 @@ class FileUtils {
    * @param {File} file 
    */
   static saveFile(file) {
+    if (file === undefined)
+      return ''
     let fileName = file.name
     let filePath = ''
     if (fileName != '' && file.size > 0) {
