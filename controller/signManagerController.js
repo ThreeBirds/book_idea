@@ -70,6 +70,11 @@ class SignManagerController {
     ctx.body = r
   }
 
+  async queryByDate(ctx) {
+    let date = ctx.request.query.date
+    let r = await signManagerService.queryByDate(date)
+    ctx.body = r
+  }
 }
 
 module.exports = SignManagerController

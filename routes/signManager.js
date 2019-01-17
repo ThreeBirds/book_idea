@@ -15,4 +15,7 @@ module.exports =  (router) => {
   router.get('/signManager/queryAll', async function (ctx, next) {
     await signManagerController.queryAll(ctx)
   })
+  router.get('/signManager/queryByDate', async function (ctx, next) {
+    await signManagerController.queryByDate(ctx)
+  })
 }

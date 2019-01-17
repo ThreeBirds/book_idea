@@ -84,6 +84,30 @@ class SignManagerService {
     return r
   }
 
+  async queryByDate(date) {
+    let sql = 'SELECT * FROM sign_manager WHERE times LIKE ? LIMIT 1'
+    let r = {}
+    if (date === undefined) {
+      r.count = 0
+      r.code = 1
+      r.msg = '日期不能为空'
+      return r
+    }
+    await sqlHelper.exec(sql, [date])
+    .then(data => {
+      r.data = data.results
+      r.code = 0
+      r.msg = '查询成功'
+      r.count = data.results.length
+    })
+    .catch(err => {
+      r.count = 0
+      r.code = 1
+      r.msg = err
+    })
+    return r
+  }
+
 }
 
 module.exports = SignManagerService
