@@ -1,5 +1,7 @@
 const sqlHelper = require('../common/sqlHelper')
 const FileUtils = require('../common/fileUtils')
+const ScoreManagerService = require('./scoreManagerService')
+const scoreManagerService = new ScoreManagerService()
 
 class SignManagerService {
 
@@ -106,6 +108,14 @@ class SignManagerService {
       r.msg = err
     })
     return r
+  }
+
+  /**
+   * 用户签到
+   * @param {string} openid 用户id
+   */
+  async userSign(openid) {
+    scoreManagerService.signScore(openid)
   }
 
 }

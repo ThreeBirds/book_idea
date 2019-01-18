@@ -75,6 +75,18 @@ class SignManagerController {
     let r = await signManagerService.queryByDate(date)
     ctx.body = r
   }
+
+  async userSign(ctx) {
+    let openid = ctx.request.query.openid || ''
+    if (openid === '') {
+      ctx.body = {
+        code: 1,
+        msg: '必填参数不能为空'
+      }
+      return
+    }
+    ctx.body = await signManagerService.userSign(openid)
+  }
 }
 
 module.exports = SignManagerController

@@ -3,6 +3,7 @@ const signManagerController = new SignManagerController()
 
 
 module.exports =  (router) => {
+  // ============ 管理系统使用接口
   router.post('/signManager/insert', async function (ctx, next) {
     await signManagerController.insert(ctx)
   })
@@ -17,5 +18,10 @@ module.exports =  (router) => {
   })
   router.get('/signManager/queryByDate', async function (ctx, next) {
     await signManagerController.queryByDate(ctx)
+  })
+
+  //=========== 前端用户接口
+  router.get('/signManager/userSign', async function (ctx, next) {
+    await signManagerController.userSign(ctx)
   })
 }

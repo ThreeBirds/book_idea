@@ -22,5 +22,9 @@ module.exports = {
     signed: true,
     rolling: false,
     renew: false,
+  },
+  scoreReg: {
+    sign: 'sign_20190117', //签到规则
+    comment: 'comment_20190117' //评论字数规则
   }
 }
