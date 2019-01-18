@@ -75,8 +75,8 @@ class BookInfoController {
     let toRoot = ctx.request.query.toRoot
     let typeCode = ctx.request.query.typeCode
     let name = ctx.request.query.name
-    let start = parseInt(ctx.request.query.start) || 0
-    let size = parseInt(ctx.request.query.size) || 10
+    let start = parseInt(ctx.request.query.page) || 0
+    let size = parseInt(ctx.request.query.limit) || 10
     let r = await bookInfoService.query(toRoot, typeCode, name, start, size)
     ctx.body = r
   }

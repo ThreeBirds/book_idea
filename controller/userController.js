@@ -65,8 +65,8 @@ class UserController {
     user.scoreMax = parseInt(ctx.request.query.scoreMax)
     user.fansMin = parseInt(ctx.request.query.fansMin) || 0
     user.fansMax = parseInt(ctx.request.query.fansMax)
-    let start = parseInt(ctx.request.query.start) || 0
-    let size = parseInt(ctx.request.query.size) || 0
+    let start = parseInt(ctx.request.query.page) || 0
+    let size = parseInt(ctx.request.query.limit) || 0
     let r = await userService.query(user, start, size)
     ctx.body = r
   }
