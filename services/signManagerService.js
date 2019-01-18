@@ -115,7 +115,19 @@ class SignManagerService {
    * @param {string} openid 用户id
    */
   async userSign(openid) {
-    scoreManagerService.signScore(openid)
+
+    let r = {}
+    await sqlHelper.exec('INSERT INTO user_sign(openid) VALUES (?)', openid)
+    .then(data => {
+      r.code = 0
+      r.msg = '签到成功'
+      scoreManagerService.signScore(openid)
+    })
+    .catch(err => {
+      r.code = 1
+      r.msg = err
+    })
+    return r
   }
 
 }

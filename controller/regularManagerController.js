@@ -10,7 +10,6 @@ class RegularManagerController {
     let endTime = ctx.request.query.endTime || ''
     let status = ctx.request.query.status || 'on'
     let regulars = []
-    let jn = JSON.stringify([{regularTypeCode:'sign_20190117', start: 1, end: 10, score: 1}])
     try {
       regulars = JSON.parse(ctx.request.query.regulars)
     } catch (error) {

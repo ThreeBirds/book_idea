@@ -37,7 +37,29 @@ class ScoreManagerService {
     let scoreInc = parseInt(regular.score) || 0
     let start = parseInt(regular.start) || 0
     let end = parseInt(regular.end) || 0
-    
+    let startTime = regularGroup.start_time
+    let endTime = regularGroup.end_time
+
+    let signCountSql = 'SELECT COUNT(*) count FROM user_sign WHERE create_time >= ? AND create_time <= ?'
+    let count = null
+    await sqlHelper.exec(signCountSql, [startTime, endTime])
+    .then(data => {
+      count = data.results[0].count
+    })
+    .catch(err => {
+
+    })
+    if (count == null)
+      return
+    if (count >= start && count <= end) {
+      sqlHelper.exec('UPDATE users SET score = score + ? WHERE openid = ?', [scoreInc, openId])
+      .then(data => {
+
+      })
+      .catch(err => {
+        
+      })
+    }
     
   }
 }
