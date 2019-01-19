@@ -123,6 +123,12 @@ class BookInfoController {
     
   }
 
+  async queryGoodBooks(ctx) {
+    let start = parseInt(ctx.request.query.page) || 0
+    let size = parseInt(ctx.request.query.limit) || 10
+    ctx.body = await bookInfoService.queryGoodBooks(start, size)
+  }
+
 }
 
 module.exports = BookInfoController

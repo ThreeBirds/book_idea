@@ -7,12 +7,13 @@ module.exports = (router) => {
   router.all('/comment/insert', async (ctx, next) => {
     await commentController.insert(ctx)
   })
-
-  router.all('/rsi/rsi/punch_attenceAddParams.action', async (ctx, next) => {
-    console.log('tag', '-----------------')
-    ctx.body = {
-      errCode: 0
-    }
+  router.all('/comment/reply', async (ctx, next) => {
+    await commentController.reply(ctx)
   })
-
+  router.get('/comment/query', async (ctx, next) => {
+    await commentController.query(ctx)
+  })
+  router.get('/comment/close/:id', async (ctx, next) => {
+    await commentController.closeComment(ctx)
+  })
 } 

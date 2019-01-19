@@ -20,14 +20,14 @@ class ScoreManagerService {
     let regularGroup = null
     //查询当前日期是否有可以执行的规则组
     await sqlHelper.exec('SELECT * FROM regular_list WHERE status="on" AND  start_time <= ? AND end_time >= ? LIMIT 1', [date, date])
-    .then(data => {
-      let results = data.results
-      if (results.length > 0)
-        regularGroup = results[0]
-    })
-    .catch(err => {
+      .then(data => {
+        let results = data.results
+        if (results.length > 0)
+          regularGroup = results[0]
+      })
+      .catch(err => {
 
-    })
+      })
     if (regularGroup == null)
       return
 
@@ -43,25 +43,65 @@ class ScoreManagerService {
     let signCountSql = 'SELECT COUNT(*) count FROM user_sign WHERE create_time >= ? AND create_time <= ?'
     let count = null
     await sqlHelper.exec(signCountSql, [startTime, endTime])
-    .then(data => {
-      count = data.results[0].count
-    })
-    .catch(err => {
+      .then(data => {
+        count = data.results[0].count
+      })
+      .catch(err => {
 
-    })
+      })
     if (count == null)
       return
     if (count >= start && count <= end) {
       sqlHelper.exec('UPDATE users SET score = score + ? WHERE openid = ?', [scoreInc, openId])
+        .then(data => {
+
+        })
+        .catch(err => {
+
+        })
+    }
+
+  }
+
+  /**
+   * 用户评论字数积分
+   * @param {string} openId 用户id
+   * @param {string} content 评论内容
+   */
+  async commentWordScore(openId, content) {
+    if (content === undefined || content.length == 0)
+      return
+    let date = new Date().Format("yyyy-MM-dd")
+    let regularGroup = null
+    //查询当前日期是否有可以执行的规则组
+    await sqlHelper.exec('SELECT * FROM regular_list WHERE status="on" AND  start_time <= ? AND end_time >= ? LIMIT 1', [date, date])
+      .then(data => {
+        let results = data.results
+        if (results.length > 0)
+          regularGroup = results[0]
+      })
+      .catch(err => {
+
+      })
+    if (regularGroup == null)
+      return
+    let regular = await regularManagerService.queryRegularByDate(date, scoreReg.comment)
+    if (regular === null)
+      return
+    let scoreInc = parseInt(regular.score) || 0
+    let start = parseInt(regular.start) || 0
+    let end = parseInt(regular.end) || 0
+    if (content.length < start || content.length > end)
+      return
+    sqlHelper.exec('UPDATE users SET score = score + ? WHERE openid = ?', [scoreInc, openId])
       .then(data => {
 
       })
       .catch(err => {
-        
+
       })
-    }
-    
   }
+
 }
 
 module.exports = ScoreManagerService

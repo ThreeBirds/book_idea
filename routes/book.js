@@ -49,4 +49,7 @@ module.exports = (router) => {
   router.get("/book/info/delete/:codes", async function (ctx, next) {
     await bookInfoController.delete(ctx)
   })
+  router.get("/book/info/queryGoodBooks", async function (ctx, next) {
+    await bookInfoController.queryGoodBooks(ctx)
+  })
 }

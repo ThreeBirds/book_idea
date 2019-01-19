@@ -144,6 +144,23 @@ class BookInfoService {
     return r
   }
 
+  async queryGoodBooks(start, size) {
+
+    let r = {}
+    await sqlHelper.exec('SELECT * FROM book_info WHERE to_root=1 LIMIT ?,?', [start, size])
+    .then(data => {
+      r.code = 0
+      r.msg = '查询成功'
+      r.data = data.results
+      r.count = data.results.count
+    })
+    .catch(err => {
+      r.code = 1
+      r.msg = err
+    })
+    return r
+  }
+
 }
 
 module.exports = BookInfoService
