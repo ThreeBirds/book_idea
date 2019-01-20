@@ -144,6 +144,109 @@ class CommentService {
     return r
   }
 
+  async report(id, openid) {
+    let r = {}
+    if (id === undefined || openid === undefined) {
+      r.code = 1
+      r.msg = '必要参数不能为空'
+      return r
+    }
+
+    let sql = 'UPDATE `comment` SET report_count = report_count + 1 WHERE id = ?'
+    await sqlHelper.exec(sql, [id])
+    .then(data => {
+      r.code = 0
+      r.msg = '举报成功'
+    })
+    .catch(err => {
+      r.code = 1
+      r.msg = err
+    })
+
+    return r
+  }
+
+  async praise(openid, id) {
+    let r = {}
+    if (openid === undefined || id === undefined) {
+      r.code = 1
+      r.msg = '必填参数不能为'
+      return r
+    }
+    let isps = await this.isPraise(openid, id)
+    if (isps) {
+      r.code = 2
+      r.msg = '该用户已经点过赞，不能重复点赞'
+      return r
+    }
+
+    let sqlInsert = 'INSERT INTO praise(openid,comment_id) VALUES(?,?)'
+    await sqlHelper.exec(sqlInsert, [openid, id])
+    .then(data => {
+      sqlHelper.exec('UPDATE `comment` SET praise_count = praise_count + 1 WHERE id = ?', [id])
+      .then(data2 => {
+
+      })
+      .catch(err2 => {
+
+      })
+      r.code = 0
+      r.msg = '点赞成功'
+    })
+    .catch(err => {
+      r.code = 3
+      r.msg = err
+    })
+    return r
+  }
+
+  async canclePraise(openid, id) {
+    let r = {}
+    if (openid === undefined || id === undefined) {
+      r.code = 1
+      r.msg = '必填参数不能为'
+      return r
+    }
+    let isps = await this.isPraise(openid, id)
+    if (!isps) {
+      r.code = 2
+      r.msg = '该用户没有点过赞，不能取消点赞'
+      return r
+    }
+    let sqlDelete = 'DELETE FROM praise WHERE openid=? AND comment_id=? '
+    await sqlHelper.exec(sqlDelete, [openid, id])
+    .then(data => {
+      sqlHelper.exec('UPDATE `comment` SET praise_count = praise_count - 1 WHERE id = ?',[id])
+      .then(data2 => {
+
+      })
+      .catch(err2 => {
+
+      })
+      r.code = 0
+      r.msg = '取消成功'
+    })
+    .catch(err => {
+      r.code = 3
+      r.msg = err
+    })
+    return r
+  }
+
+  async isPraise(openid, id) {
+
+    let r = false
+    let sql = 'SELECT COUNT(*) as count FROM praise WHERE openid= ? AND comment_id=?'
+    await sqlHelper.exec(sql, [openid, id])
+    .then(data => {
+      r = data.results[0].count > 0?true:false
+    })
+    .catch(err => {
+
+    })
+    return r
+  }
+
 }
 
 module.exports = CommentService

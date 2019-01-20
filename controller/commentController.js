@@ -55,6 +55,42 @@ class CommentController {
     ctx.body = await commentService.closeComment(id)
   }
 
+  async report(ctx) {
+    let id = ctx.params.id
+    let openid = ctx.request.query.openid
+    ctx.body = await commentService.report(id, openid)
+  }
+
+  async praise(ctx) {
+    let openid = ctx.request.query.openid
+    let id = ctx.request.query.id
+    ctx.body = await commentService.praise(openid, id)
+  }
+
+  async canclePraise(ctx) {
+    let openid = ctx.request.query.openid
+    let id = ctx.request.query.id
+    ctx.body = await commentService.canclePraise(openid, id)
+  }
+
+  async isPraise(ctx) {
+    let openid = ctx.request.query.openid || ''
+    let id = ctx.request.query.id || ''
+    if (openid === '' || id === '') {
+      ctx.body = {
+        code: 1,
+        msg: '必要参数不能为空'
+      }
+      return
+    }
+    let r = await commentService.isPraise(openid, id)
+    ctx.body = {
+      code: 0,
+      msg: '查询成功',
+      data: r
+    }
+  }
+
 }
 
 module.exports = CommentController
