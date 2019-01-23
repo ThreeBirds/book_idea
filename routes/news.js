@@ -6,5 +6,9 @@ module.exports =  (router) => {
   router.get('/news/hot', async function (ctx, next) {
     await newsController.hotComments(ctx)
   })
+
+  router.get('/news/friend', async function (ctx, next) {
+    await newsController.friendComments(ctx)
+  })
   
 }

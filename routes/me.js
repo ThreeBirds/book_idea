@@ -10,4 +10,16 @@ module.exports =  (router) => {
   router.get('/me/queryCollection', async function (ctx, next) {
     await meController.queryCollection(ctx)
   })
+  //删除收藏
+  router.get('/me/deleteCollection', async function (ctx, next) {
+    await meController.deleteCollection(ctx)
+  })
+  //关注我的和我关注的查询
+  router.get('/me/queryFollow', async function (ctx, next) {
+    await meController.queryFollow(ctx)
+  })
+  //我回复的和回复我的
+  router.get('/me/queryComment', async function (ctx, next) {
+    await meController.queryComment(ctx)
+  })
 }

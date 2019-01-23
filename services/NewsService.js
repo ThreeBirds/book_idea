@@ -18,6 +18,48 @@ class NewsService {
     })
     return r
   }
+  
+  /**
+   * 查询我关注的人的动态
+   * @param {string} openid 
+   * @param {number} page 
+   * @param {number} limit 
+   */
+  async friendComments(openid, page, limit) {
+    let sql = 'SELECT * FROM `comment` WHERE type=0  AND status="on" AND writer_code in (SELECT user_code FROM fans WHERE fans_code = ?) LIMIT ?,?'
+    let r = {}
+    if (openid === undefined || openid === '') {
+      r.code = 1
+      r.msg = '必要参数不能为空'
+      return r
+    }
+    let count = 0
+    await sqlHelper.exec('SELECT COUNT(*) count FROM `comment` WHERE type=0  AND status="on" AND writer_code in (SELECT user_code FROM fans WHERE fans_code = ?)', [openid])
+    .then(data => {
+      count = data.results[0].count
+    })
+    .catch(err => {
+
+    })
+    if (count === 0) {
+      r.code = 0
+      r.msg = '查询成功'
+      r.count = count
+      return r
+    }
+    await sqlHelper.exec(sql, [openid, page, limit])
+    .then(data => {
+      r.code = 0
+      r.msg = '查询成功'
+      r.count = count
+      r.data = data.results
+    })
+    .catch(err => {
+      r.code = 2
+      r.msg = err
+    })
+    return r
+  }
 
 }
 

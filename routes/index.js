@@ -6,6 +6,7 @@ let signManager = require('./signManager')
 let regularManager = require('./regularManager')
 let news = require('./news')
 let me = require('./me')
+let message = require('./message')
 
 module.exports =  (router) => {
   router.get('/welcome', async function (ctx, next) {
@@ -24,5 +25,6 @@ module.exports =  (router) => {
   regularManager(router)
   news(router)
   me(router)
+  message(router)
 }
 
