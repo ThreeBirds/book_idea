@@ -69,6 +69,11 @@ class BannerController {
     }
   }
 
+  async queryAll(ctx) {
+    
+    ctx.body = await bannerService.queryAll()
+  }
+
 }
  
 module.exports = BannerController

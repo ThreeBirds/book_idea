@@ -11,4 +11,7 @@ module.exports =  (router) => {
   router.get('/banner/delete', async function (ctx, next) {
     await bannerController.delete(ctx)
   })
+  router.get('/banner/queryAll', async function (ctx, next) {
+    await bannerController.queryAll(ctx)
+  })
 }
