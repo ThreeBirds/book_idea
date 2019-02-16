@@ -58,7 +58,8 @@ class BookInfoService {
    */
   async query(toRoot, typeCode, name, start, size) {
 
-    let sqlCount = "SELECT COUNT(*) count FROM book_info "
+    // let sqlCount = "SELECT COUNT(*) count FROM book_info "
+    let sqlCount = "SELECT COUNT(*) count FROM book_info bi INNER JOIN book_type bt ON bi.type_code=bt.`CODE` "
     let sqlInfo = "SELECT bi.*,bt.type FROM book_info bi INNER JOIN book_type bt ON bi.type_code=bt.`CODE` "
 
     let condition = "WHERE "
