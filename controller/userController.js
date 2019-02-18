@@ -88,6 +88,11 @@ class UserController {
     }
   }
 
+  async info(ctx) {
+    let openid = ctx.request.query.openid || ""
+    ctx.body = await userService.info(openid)
+  }
+
 }
 
 module.exports = UserController

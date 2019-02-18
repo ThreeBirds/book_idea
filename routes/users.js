@@ -14,5 +14,7 @@ module.exports =  (router) => {
   router.get('/users/edit', async function (ctx, next) {
     await userController.editScore(ctx)
   })
-
+  router.get('/users/info', async function (ctx, next) {
+    await userController.info(ctx)
+  })
 }

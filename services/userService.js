@@ -143,6 +143,27 @@ class UserService {
     return r
   }
 
+  async info(openid) {
+    let r = {}
+    if (openid === '') {
+      r.code = 1
+      r.msg = '必填参数不能为空'
+      return r
+    }
+    let sql = 'SELECT *, (SELECT COUNT(*) FROM fans f WHERE f.user_code=? ) fans_count,(SELECT COUNT(*) FROM fans f WHERE f.fans_code=? ) collect_count  FROM users WHERE openid=?'
+    await sqlHelper.exec(sql, [openid, openid, openid])
+    .then(data => {
+      r.data = data.results
+      r.code = 0
+      r.msg = '查询成功'
+    })
+    .catch(err => {
+      r.code = 2
+      r.msg = err
+    })
+    return r
+  }
+
 }
 
 module.exports = UserService
