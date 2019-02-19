@@ -150,8 +150,9 @@ class UserService {
       r.msg = '必填参数不能为空'
       return r
     }
-    let sql = 'SELECT *, (SELECT COUNT(*) FROM fans f WHERE f.user_code=? ) fans_count,(SELECT COUNT(*) FROM fans f WHERE f.fans_code=? ) collect_count  FROM users WHERE openid=?'
-    await sqlHelper.exec(sql, [openid, openid, openid])
+    let date = new Date().Format("yyyy-MM-dd")
+    let sql = 'SELECT *,(SELECT COUNT(*) FROM user_sign WHERE openid=? AND create_time BETWEEN DATE(?) AND (?)) sign_count, (SELECT COUNT(*) FROM fans f WHERE f.user_code=? ) fans_count,(SELECT COUNT(*) FROM fans f WHERE f.fans_code=? ) collect_count  FROM users WHERE openid=?'
+    await sqlHelper.exec(sql, [openid, date, date + ' 23:59:59', openid, openid, openid])
     .then(data => {
       r.data = data.results
       r.code = 0
