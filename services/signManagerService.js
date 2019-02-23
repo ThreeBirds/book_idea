@@ -95,7 +95,7 @@ class SignManagerService {
       r.msg = '日期不能为空'
       return r
     }
-    await sqlHelper.exec(sql, [date])
+    await sqlHelper.exec(sql, [`%${date}%`])
     .then(data => {
       r.data = data.results
       r.code = 0
