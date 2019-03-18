@@ -1,5 +1,5 @@
 module.exports = {
-  port: 80,
+  port: 3000,
   // mysql: {
   //   host: '127.0.0.1',
   //   port: '3306',
