@@ -1,4 +1,6 @@
 const sqlHelper = require('../common/sqlHelper')
+const WeChatUtils = require('../common/wechatUtils')
+const weChatUtils = new WeChatUtils()
 
 class UserService {
 
@@ -163,6 +165,45 @@ class UserService {
       r.msg = err
     })
     return r
+  }
+
+  async oauth(code) {
+    if (code == '') {
+      return {
+        errCode: 1,
+        errMsg: 'code不能为空'
+      }
+    }
+    let tokenObj = await weChatUtils.getAccessToken(code)
+    let result = {}
+    result.errCode = 1
+    result.errMsg = '获取失败'
+    let ret = false
+    if (tokenObj.openid && tokenObj.access_token) {
+      let user = await weChatUtils.getUser(tokenObj.openid, tokenObj.access_token) 
+      if (user.openid) {
+        let sql = 'INSERT INTO users(openid,name,headimgurl)  SELECT ?, ?, ? WHERE NOT EXISTS (SELECT * FROM users WHERE openid=?)'
+        await sqlHelper.exec(sql, [user.openid, user.nickname||"", user.headimgurl||"", user.openid])
+        .then(data => {
+          ret = true
+        })
+        .catch(err => {
+  
+        })
+      }
+      if (ret) {
+        result.errCode = 0
+        result.errMsg = '获取成功'
+        result.data = {
+          openid: user.openid,
+          name: user.nickname,
+          headimgurl: user.headimgurl
+        }
+      }
+      
+    } 
+
+    return result
   }
 
 }
