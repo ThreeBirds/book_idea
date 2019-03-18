@@ -1,5 +1,7 @@
 let UserService = require('../services/userService')
 let userService = new UserService()
+let WeChatUtils = require('../common/wechatUtils')
+let weChatUtils = new WeChatUtils()
 
 class UserController {
 
@@ -91,6 +93,11 @@ class UserController {
   async info(ctx) {
     let openid = ctx.request.query.openid || ""
     ctx.body = await userService.info(openid)
+  }
+
+  async oauth(ctx) {
+    // ctx.response.redirect('http://www.baidu.com')
+    weChatUtils.getAccessToken()
   }
 
 }

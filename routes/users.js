@@ -17,4 +17,7 @@ module.exports =  (router) => {
   router.get('/users/info', async function (ctx, next) {
     await userController.info(ctx)
   })
+  router.get('/users/oauth', async function (ctx, next) {
+    await userController.oauth(ctx)
+  })
 }
