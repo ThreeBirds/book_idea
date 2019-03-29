@@ -83,13 +83,14 @@ class BookInfoController {
 
   async queryByCode(ctx) {
     let code = ctx.params.code || ""
-    if (code === '') {
+    let openid = ctx.params.openid || ""
+    if (code === '' || openid == '') {
       ctx.body = {
         errCode: 1,
         errMsg: 'code不能为空'
       }
     } else {
-      let r = await bookInfoService.queryByCode(code)
+      let r = await bookInfoService.queryByCode(openid, code)
       ctx.body = {
         errCode: 0,
         errMsg: '查询成功',

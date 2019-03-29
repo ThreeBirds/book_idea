@@ -4,7 +4,7 @@ class NewsService {
   
   async hotComments() {
     let r = {}
-    let sql = 'SELECT * FROM `comment` ORDER BY praise_count DESC LIMIT 50 '
+    let sql = 'SELECT c.*,u.`name` username,b.`name` bookname FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid  LEFT JOIN book_info b ON c.book_code=b.`code` ORDER BY praise_count DESC LIMIT 50 '
     await sqlHelper.exec(sql, [])
     .then(data => {
       r.code = 0

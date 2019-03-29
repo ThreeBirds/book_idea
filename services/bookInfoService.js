@@ -112,9 +112,9 @@ class BookInfoService {
     return count
   }
 
-  async queryByCode(code) {
+  async queryByCode(openid, code) {
     let r = null
-    await sqlHelper.exec('SELECT bi.*,bt.type FROM book_info bi  LEFT JOIN book_type bt ON  bi.type_code=bt.`CODE` WHERE bi.`code`=?', [code])
+    await sqlHelper.exec('SELECT bi.*,bt.type,(SELECT COUNT(*) FROM me_collection WHERE openid=? AND book_code=?) iscollect FROM book_info bi  LEFT JOIN book_type bt ON  bi.type_code=bt.`CODE` WHERE bi.`code`=?', [openid, code, code])
       .then(data => {
         r = data.results
       })

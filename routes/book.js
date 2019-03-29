@@ -43,7 +43,7 @@ module.exports = (router) => {
   router.get("/book/info/query", async function (ctx, next) {
     await bookInfoController.query(ctx)
   })
-  router.get("/book/info/queryByCode/:code", async function (ctx, next) {
+  router.get("/book/info/queryByCode/:code/:openid", async function (ctx, next) {
     await bookInfoController.queryByCode(ctx)
   })
   router.get("/book/info/delete/:codes", async function (ctx, next) {
