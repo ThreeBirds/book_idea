@@ -105,7 +105,7 @@ class MeService {
     }
 
     let sql0 = 'SELECT f.*,u.name fansname,u.headimgurl FROM fans f INNER JOIN users u ON f.fans_code=u.openid WHERE f.user_code=?'
-    let sql1 = 'SELECT f.*,u.name fansname,u.headimgurl FROM fans f INNER JOIN users u ON f.user_code=u.openid WHERE f.fans_code=?'
+    let sql1 = 'SELECT f.*,u.name username,u.headimgurl FROM fans f INNER JOIN users u ON f.user_code=u.openid WHERE f.fans_code=?'
     let sql = type == 0?sql0:sql1
     await sqlHelper.exec(sql, [openid])
     .then(data => {
