@@ -47,7 +47,7 @@ class MeService {
       r.data = []
       return r
     }
-    await sqlHelper.exec('SELECT m.*,b.name FROM me_collection m INNER JOIN book_info b ON m.book_code=b.code WHERE m.openid=? LIMIT ?,?', [openid, page, limit])
+    await sqlHelper.exec('SELECT m.*,b.name,b.cover_url FROM me_collection m INNER JOIN book_info b ON m.book_code=b.code WHERE m.openid=? LIMIT ?,?', [openid, page, limit])
     .then(data => {
       r.code = 0
       r.msg = '查询成功'
@@ -104,8 +104,8 @@ class MeService {
       return
     }
 
-    let sql0 = 'SELECT * FROM fans WHERE user_code=?'
-    let sql1 = 'SELECT * FROM fans WHERE fans_code=?'
+    let sql0 = 'SELECT f.*,u.name fansname,u.headimgurl FROM fans f INNER JOIN users u ON f.fans_code=u.openid WHERE f.user_code=?'
+    let sql1 = 'SELECT f.*,u.name fansname,u.headimgurl FROM fans f INNER JOIN users u ON f.user_code=u.openid WHERE f.fans_code=?'
     let sql = type == 0?sql0:sql1
     await sqlHelper.exec(sql, [openid])
     .then(data => {
