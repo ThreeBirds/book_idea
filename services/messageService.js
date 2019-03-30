@@ -49,7 +49,7 @@ class MessageService {
       r.msg = '查询成功'
       return r
     }
-    let sql = 'SELECT m.*,u.name,IFNULL(mr.receiver, 0) read_receiver FROM message m INNER JOIN users u ON m.sender=u.openid LEFT JOIN message_read mr ON  m.id=mr.message_id WHERE m.receiver=? LIMIT ?,?'
+    let sql = 'SELECT m.*,u.name,u.headimgurl,IFNULL(mr.receiver, 0) read_receiver FROM message m INNER JOIN users u ON m.sender=u.openid LEFT JOIN message_read mr ON  m.id=mr.message_id WHERE m.receiver=? LIMIT ?,?'
     await sqlHelper.exec(sql, [openid, page, limit])
     .then(data => {
       r.code = 0
