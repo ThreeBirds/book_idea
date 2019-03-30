@@ -45,7 +45,7 @@ class MessageService {
     })
     if (count == 0) {
       r.count = 0
-      r.data = []
+      r.data = []·
       r.msg = '查询成功'
       return r
     }
