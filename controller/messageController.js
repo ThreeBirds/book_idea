@@ -23,6 +23,12 @@ class MessageController {
     ctx.body = await messageService.messageById(messageId, openid)    
   }
 
+  async talkrecords(ctx) {
+    let openid = ctx.request.query.openid || ''
+    let friendid = ctx.request.query.friendid || ''
+    ctx.body = await messageService.talkrecords(openid, friendid)    
+  }
+
 }
 
 module.exports = MessageController

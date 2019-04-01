@@ -12,4 +12,7 @@ module.exports =  (router) => {
   router.get('/message/messageById', async function (ctx, next) {
     await messageController.messageById(ctx)
   })
+  router.get('/message/talkrecords', async function (ctx, next) {
+    await messageController.talkrecords(ctx)
+  })
 }

@@ -45,7 +45,7 @@ class MessageService {
     })
     if (count == 0) {
       r.count = 0
-      r.data = []·
+      r.data = []
       r.msg = '查询成功'
       return r
     }
@@ -90,6 +90,29 @@ class MessageService {
     })
     return r
   }
+
+  async talkrecords(openid, friendid) {
+    let r = {}
+    if (friendid === '' || openid === '') {
+      r.code = 1
+      r.msg = '必填参数不能为空'
+      return
+    }
+
+    let sql = 'SELECT m.* FROM message m WHERE sender in (?, ?) AND receiver in (?, ?)' 
+    await sqlHelper.exec(sql, [openid, friendid, openid, friendid])
+    .then(data => {
+      r.code = 0
+      r.data = data.results
+      r.msg = '查询成功'
+    })
+    .catch(err => {
+      r.code = 2
+      r.msg = err
+    })
+    return r
+  }
+
 }
 
 module.exports = MessageService
