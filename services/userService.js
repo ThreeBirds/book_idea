@@ -145,7 +145,7 @@ class UserService {
     return r
   }
 
-  async info(openid) {
+  async info(openid, login) {
     let r = {}
     if (openid === '') {
       r.code = 1
@@ -153,8 +153,8 @@ class UserService {
       return r
     }
     let date = new Date().Format("yyyy-MM-dd")
-    let sql = 'SELECT *,(SELECT count(*) FROM message WHERE id not in (SELECT m.id FROM message m INNER JOIN message_read r ON m.id=r.message_id WHERE m.receiver=?) AND receiver=?) unread_count,(SELECT COUNT(*) FROM user_sign WHERE openid=? AND create_time BETWEEN DATE(?) AND (?)) sign_count, (SELECT COUNT(*) FROM fans f WHERE f.user_code=? ) fans_count,(SELECT COUNT(*) FROM fans f WHERE f.fans_code=? ) collect_count  FROM users WHERE openid=?'
-    await sqlHelper.exec(sql, [openid,openid,openid, date, date + ' 23:59:59', openid, openid, openid])
+    let sql = 'SELECT *,(SELECT COUNT(*) FROM fans WHERE fans_code=? AND user_code=?) isFav,(SELECT count(*) FROM message WHERE id not in (SELECT m.id FROM message m INNER JOIN message_read r ON m.id=r.message_id WHERE m.receiver=?) AND receiver=?) unread_count,(SELECT COUNT(*) FROM user_sign WHERE openid=? AND create_time BETWEEN DATE(?) AND (?)) sign_count, (SELECT COUNT(*) FROM fans f WHERE f.user_code=? ) fans_count,(SELECT COUNT(*) FROM fans f WHERE f.fans_code=? ) collect_count  FROM users WHERE openid=?'
+    await sqlHelper.exec(sql, [login,openid,openid,openid,openid, date, date + ' 23:59:59', openid, openid, openid])
     .then(data => {
       r.data = data.results
       r.code = 0

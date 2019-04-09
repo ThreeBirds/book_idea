@@ -91,6 +91,24 @@ class CommentController {
     }
   }
 
+  async praiseRecords(ctx) {
+    let openid = ctx.request.query.openid || ''
+    let id = ctx.request.query.id || ''
+    if (openid === '' || id === '') {
+      ctx.body = {
+        code: 1,
+        msg: '必要参数不能为空'
+      }
+      return
+    }
+    let r = await commentService.isPraise(openid, id)
+    ctx.body = {
+      code: 0,
+      msg: '查询成功',
+      data: r
+    }
+  }
+
 }
 
 module.exports = CommentController

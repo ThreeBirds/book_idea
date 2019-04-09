@@ -32,4 +32,8 @@ module.exports = (router) => {
   router.get('/comment/isPraise', async (ctx, next) => {
     await commentController.isPraise(ctx)
   })
+  //某些用户是否点过赞
+  router.post('/comment/  ', async (ctx, next) => {
+    await commentController.praiseRecords(ctx)
+  })
 } 

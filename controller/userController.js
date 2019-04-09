@@ -90,7 +90,8 @@ class UserController {
 
   async info(ctx) {
     let openid = ctx.request.query.openid || ""
-    ctx.body = await userService.info(openid)
+    let login = ctx.request.query.login || ""
+    ctx.body = await userService.info(openid, login)
   }
 
   async oauth(ctx) {
