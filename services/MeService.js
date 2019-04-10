@@ -137,7 +137,7 @@ class MeService {
       return
     }
 
-    let sql0 = 'SELECT c.*,u.name FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid WHERE resp_code in ( ' +
+    let sql0 = 'SELECT c.*,u.name,u.headimgurl FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid WHERE resp_code in ( ' +
       'SELECT c2.id FROM `comment` c2 WHERE writer_code=? ' +
     ') LIMIT ?,? '
     let sql1 = 'SELECT c.*,u.name,u.headimgurl FROM `comment` c INNER JOIN users u ON writer_code=openid WHERE writer_code = ? LIMIT ?,?'
