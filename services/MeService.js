@@ -140,7 +140,7 @@ class MeService {
     let sql0 = 'SELECT c.*,u.name FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid WHERE resp_code in ( ' +
       'SELECT c2.id FROM `comment` c2 WHERE writer_code=? ' +
     ') LIMIT ?,? '
-    let sql1 = 'SELECT c.*,u.name FROM `comment` c INNER JOIN users u ON writer_code=openid WHERE writer_code = ? LIMIT ?,?'
+    let sql1 = 'SELECT c.*,u.name,u.headimgurl FROM `comment` c INNER JOIN users u ON writer_code=openid WHERE writer_code = ? LIMIT ?,?'
     let sql = me === 1?sql1:sql0
     let sqlCount = me === 1?'SELECT COUNT(*) count FROM `comment` c INNER JOIN users u ON writer_code=openid WHERE writer_code = ?':'SELECT COUNT(*) count FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid WHERE resp_code in (SELECT c2.id FROM `comment` c2 WHERE writer_code=?)'
     let count = 0
