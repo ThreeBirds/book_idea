@@ -26,7 +26,7 @@ class NewsService {
    * @param {number} limit 
    */
   async friendComments(openid, page, limit) {
-    let sql = 'SELECT * FROM `comment` WHERE type=0  AND status="on" AND writer_code in (SELECT user_code FROM fans WHERE fans_code = ?) LIMIT ?,?'
+    let sql = 'SELECT c.*,b.`name` bookname,b.author,b.cover_url FROM `comment` c LEFT JOIN book_info b ON c.book_code=b.`code` WHERE type=0  AND status="on" AND writer_code in  (SELECT user_code FROM fans WHERE fans_code = ?) LIMIT ?,?'
     let r = {}
     if (openid === undefined || openid === '') {
       r.code = 1
