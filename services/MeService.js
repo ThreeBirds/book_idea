@@ -137,7 +137,7 @@ class MeService {
       return
     }
 
-    let sql0 = 'SELECT c.*,u.name,u.headimgurl,bi.`name`,bi.cover_url,c3.content orgin_content FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid LEFT JOIN book_info bi ON c.book_code=bi.`code` LEFT JOIN `comment` c3 ON c.reply_to=c3.id WHERE reply_to in ( ' +
+    let sql0 = 'SELECT c.*,u.name,u.headimgurl,bi.`name`,bi.cover_url,c3.content orgin_content FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid LEFT JOIN book_info bi ON c.book_code=bi.`code` LEFT JOIN `comment` c3 ON c.reply_to=c3.id WHERE c.reply_to in ( ' +
       'SELECT c2.id FROM `comment` c2 WHERE writer_code=? ' +
     ') LIMIT ?,? '
     let sql1 = 'SELECT c.*,u.name,u.headimgurl FROM `comment` c INNER JOIN users u ON writer_code=openid WHERE writer_code = ? LIMIT ?,?'
