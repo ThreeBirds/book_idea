@@ -137,12 +137,12 @@ class MeService {
       return
     }
 
-    let sql0 = 'SELECT c.*,u.name,u.headimgurl FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid WHERE resp_code in ( ' +
+    let sql0 = 'SELECT c.*,u.name,u.headimgurl,bi.`name`,bi.cover_url,c3.content orgin_content FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid LEFT JOIN book_info bi ON c.book_code=bi.`code` LEFT JOIN `comment` c3 ON c.reply_to=c3.id WHERE reply_to in ( ' +
       'SELECT c2.id FROM `comment` c2 WHERE writer_code=? ' +
     ') LIMIT ?,? '
     let sql1 = 'SELECT c.*,u.name,u.headimgurl FROM `comment` c INNER JOIN users u ON writer_code=openid WHERE writer_code = ? LIMIT ?,?'
     let sql = me === 1?sql1:sql0
-    let sqlCount = me === 1?'SELECT COUNT(*) count FROM `comment` c INNER JOIN users u ON writer_code=openid WHERE writer_code = ?':'SELECT COUNT(*) count FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid WHERE resp_code in (SELECT c2.id FROM `comment` c2 WHERE writer_code=?)'
+    let sqlCount = me === 1?'SELECT COUNT(*) count FROM `comment` c INNER JOIN users u ON writer_code=openid WHERE writer_code = ?':'SELECT COUNT(*) count FROM `comment` c INNER JOIN users u ON c.writer_code=u.openid WHERE reply_to in (SELECT c2.id FROM `comment` c2 WHERE writer_code=?)'
     let count = 0
     let countErr = null
     await sqlHelper.exec(sqlCount, [openid])
